@@ -1,3 +1,4 @@
+const dote = require('dotenv').config();
 
 const fs = require('fs');
 const path = require('path');
@@ -38,6 +39,9 @@ nopt.invalidHandler = function(k,v,t) {
 }
 
 var parsedArgs = nopt(knownOpts, shortHands, process.argv, 2);
+
+console.log('PORT desde process.env:', process.env.PORT);
+
 
 if (parsedArgs.help) {
     console.log("FUXA v" + FUXA.version());
@@ -211,13 +215,17 @@ const io = socketIO(server);
 var www = path.resolve(__dirname, '../client/dist');
 settings.httpStatic = settings.httpStatic || www;
 
+parsedArgs.port= process.env.PORT;
+
 if (parsedArgs.port !== undefined){
     settings.uiPort = parsedArgs.port;
 } else {
     if (settings.uiPort === undefined){
-        settings.uiPort = 1881;
+        settings.uiPort = 1881;   //lpsac
     }
 }
+
+
 settings.uiHost = settings.uiHost || "0.0.0.0";
 
 // Wait ending initialization 
@@ -306,8 +314,14 @@ if (settings.disableServer !== false) {
     app.use('/', FUXA.httpApi);
 }
 
+
+
+
 function getListenPath() {
     var port = settings.serverPort;
+   
+    console.log("puerto:");
+    console.log(port);
     if (port === undefined) {
         port = settings.uiPort;
     }
@@ -341,6 +355,10 @@ function startFuxa() {
             server.listen(settings.uiPort, settings.uiHost, function () {
                 settings.serverPort = server.address().port;
                 process.title = 'FUXA';
+                logger.info("labprojects");
+                logger.info(process.env.CLIENTE);
+                console.log(`Mensaje de LPSAC: Server will run on port: ${process.env.PORT}`);
+
                 logger.info('WebServer is running ' + getListenPath());
             });
         } else {
