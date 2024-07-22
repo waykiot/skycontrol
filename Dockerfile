@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:20 
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -20,5 +20,5 @@ RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev && \
 ADD . /usr/src/app/FUXA
 
 WORKDIR /usr/src/app/FUXA/server
-EXPOSE 2000   
+EXPOSE 2000  
 CMD [ "npm", "start" ]
