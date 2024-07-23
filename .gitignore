@@ -77,7 +77,7 @@ _db/
 # ex.packages
 _pkg/
 #resources images
-_images/
+#_images/
 
 _reports/
 
